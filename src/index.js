@@ -22,7 +22,7 @@ refs.formEl.addEventListener('submit', onSearch);
 refs.btnMore.addEventListener('click', onBtnMore, false);
 refs.galleryListEl.addEventListener('click', onModal);
 
-function onSearch(e) {
+async function onSearch(e) {
   e.preventDefault();
   clearRequest();
   imgApiService.query = e.currentTarget.elements.query.value;
@@ -33,15 +33,20 @@ function onSearch(e) {
     });
   }
   imgApiService.resetPage();
-  imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
+
+  // imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
+  const fetchArt = await imgApiService.fectchArticles(searchQuery);
+  const addMarkup = await fetchArt.addMarkupHits;
 }
 function onBtnMore() {
   imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
 }
+
 function addMarkupHits(hits) {
   refs.galleryListEl.insertAdjacentHTML('beforeend', cardImagesTpl(hits));
   omScroll();
 }
+
 function clearRequest() {
   refs.galleryListEl.innerHTML = '';
 }
