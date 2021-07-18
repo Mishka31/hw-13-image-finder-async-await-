@@ -1,7 +1,10 @@
 import './sass/main.scss';
 import ImageApiService from './js/apiService';
 import cardImagesTpl from './templates/card-images';
-// import * as basicLightbox from 'basiclightbox';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+const { error } = require('@pnotify/core');
+
 const basicLightbox = require('basiclightbox');
 
 const refs = {
@@ -21,9 +24,14 @@ refs.galleryListEl.addEventListener('click', onModal);
 
 function onSearch(e) {
   e.preventDefault();
-
   clearRequest();
   imgApiService.query = e.currentTarget.elements.query.value;
+  if (imgApiService.query === '') {
+    return error({
+      title: 'Empty',
+      text: 'Please, enter information',
+    });
+  }
   imgApiService.resetPage();
   imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
 }
@@ -46,9 +54,7 @@ function omScroll() {
     });
   }
 }
-
 function onModal(e) {
   let instance = basicLightbox.create(`<img src=${e.target.getAttribute('data-src')}>`);
   instance.show();
-  basicLightbox.visible();
 }
