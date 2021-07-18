@@ -16,7 +16,7 @@
   "author": "Misha Krasnonos <muzishutka7@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/goitacademy/goit-js-hw-13-image-finder/issues"
+    "url": "https://github.com/goitacademy/hw-13-image-finder-async-await-try-cach/issues"
   },
   "devDependencies": {
     "@pnotify/core": "^5.2.0",

@@ -21,11 +21,9 @@ export default class ImageApiService {
           text: 'Enter something else',
         });
       }
+      return resJson.hits;
     } catch (er) {
-      return error({
-        title: '404',
-        text: 'The origin server did not find a current representation',
-      });
+      console.log(error);
     }
   }
   resetPage() {
