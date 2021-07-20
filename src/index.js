@@ -15,6 +15,7 @@ const refs = {
   modalCloseEl: document.querySelector('.basicLightbox'),
   body: document.querySelector('body'),
 };
+refs.btnMore.style.visibility = 'hidden';
 
 const imgApiService = new ImageApiService();
 
@@ -33,13 +34,17 @@ function onSearch(e) {
     });
   }
   imgApiService.resetPage();
-  imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
+  const df = imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
 }
+
 function onBtnMore() {
   imgApiService.fectchArticles(searchQuery).then(addMarkupHits);
 }
 function addMarkupHits(hits) {
   refs.galleryListEl.insertAdjacentHTML('beforeend', cardImagesTpl(hits));
+  if (hits.length >= 12) {
+    refs.btnMore.style.visibility = 'visible';
+  }
   omScroll();
 }
 function clearRequest() {
@@ -47,7 +52,7 @@ function clearRequest() {
 }
 function omScroll() {
   if (imgApiService.page > 2) {
-    const el = document.querySelector('#box');
+    const el = document.querySelector('.btn-more');
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'end',
